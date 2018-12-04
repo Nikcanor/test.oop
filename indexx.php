@@ -29,27 +29,43 @@ abstract class Actiune{
 
 
 // --------------------------------------- Autobus
- class Autobus extends Actiune{
-    private $autobus = 'Autobus';
+class Bus extends Actiune{ 
 
-    private $oprire = null;
-    private $max = 50;
-    public function __construct($oprire){
-        $this->oprire = $oprire;
+    private $nrpasageri = NULL;   
+    private $maxpasageri = NULL;   
+    private $incarcat = FALSE;   
+
+    public function __construct($maxpasageri){
+		$this->maxpasageri = $maxpasageri;
     }
 
-    public function persoane(){
+    public function stop($pasageri = NULL){
+        if(empty($pasageri)){
+            return 'Stop ';
+        }
+        
+        if($this->incarcat){
+            return 'Busul este incarcat';
+        }
 
+        $incarcaPasageri .= '<br>' . $this->incarca($pasageri); 
+        
+        return $incarcaPasageri;
     }
-    public function oprire(){
 
-    }
 
-    public function move($distanta){
-        return $this->autobus . ' ' . $distanta;
+    public function incarca($pasageri){
+        if(($this->nrpasageri + $pasageri) <= $this->maxpasageri){
+            $this->nrpasageri =  $this->nrpasageri + $pasageri;
+            return 'Pasageri in bus: ' . $this->pasageriBus;
+        }
+
+        $pasageriRamasi = $this->maxpasageri - ($this->nrpasageri + $pasageri);
+        $this->incarcat = TRUE;
+        
+        return 'Busul este incarcat ' . $pasageriRamasi;
     }
-    
- }
+}
 
 //----------------------------------------- Conditii
 
@@ -120,8 +136,77 @@ echo $bmw->stop();
 <br>
 <br>
 <br>
-<?
-echo 'buss';
+<?php
+$buss = new Bus(30);
+echo($buss->move(2));
+    echo('<br>');
 
-$buss = new Autobus();
-echo $buss->move(4);
+    echo($buss->rotateRight());
+    echo('<br>');
+
+    echo($buss->move(5));
+    echo('<br>');
+
+    echo($buss->rotateLeft());
+    echo('<br>');
+
+    echo($buss->move(1));
+    echo('<br>');
+
+    echo($buss->stop(10));
+    echo('<br>');
+
+    echo($buss->move(5));
+    echo('<br>');
+
+    echo($buss->stop(10));
+    echo('<br>');
+
+    echo($buss->move(5));
+    echo('<br>');
+
+    echo($buss->rotateLeft());
+    echo('<br>');
+
+    echo($buss->move(2));
+    echo('<br>');
+
+    echo($buss->stop(15));
+    echo('<br>');
+
+    echo($buss->move(1));
+    echo('<br>');
+
+    echo($buss->rotateLeft());
+    echo('<br>');
+
+    echo($buss->move(2));
+    echo('<br>');
+
+    echo($buss->rotateRight());
+    echo('<br>');
+
+    echo($buss->move(1));
+    echo('<br>');
+
+    echo($buss->rotateLeft());
+    echo('<br>');
+
+    echo($buss->move(5));
+    echo('<br>');
+
+    echo($buss->stop(3));
+    echo('<br>');
+
+    echo($buss->move(5));
+    echo('<br>');
+
+    echo($buss->stop(2));
+    echo('<br>');
+
+    echo($buss->move(10));
+    echo('<br>');
+
+    echo($buss->stop());
+    echo('<br>');
+?>
